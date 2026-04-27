@@ -142,18 +142,4 @@ Aplikasi ini menggunakan **dummy data**. Untuk produksi, integrasikan dengan:
 
 ---
 
-## 👨‍💻 Developer
 
-**Jay (I Komang Jaya Wiguna)**  
-Mahasiswa Institut Bisnis dan Teknologi Indonesia (Instiki)  
-Konsentrasi: Web Development & UI/UX Design
-
-
-> Brand: **Jay.ID** — Layanan top up game & aplikasi premium
-
----
-
-## 📄 Lisensi
-
-Project ini dibuat untuk keperluan pembelajaran dan portofolio pribadi.  
-© 2025 Jay.ID — All rights reserved.
