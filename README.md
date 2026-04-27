@@ -20,14 +20,31 @@
 ## ✨ Fitur
 
 - 🔐 **Login & Lupa Password** — validasi input, loading state, animasi fade
+- <img src="https://github.com/user-attachments/assets/dc081d9f-7fbc-4f98-8cd1-7919caf4bf5c" width="360" alt="Login" />
+
 - 🏠 **Dashboard** — kartu saldo, menu cepat, grid game, riwayat transaksi terakhir
+- <img src="https://github.com/user-attachments/assets/465f2335-c926-483a-92e8-37db0ee230c0" widht = "360" alt = "dashboard"/>
+
 - 🎮 **Top Up Game** — input ID game, grid nominal (dilengkapi badge HOT & BONUS)
+- <img src="https://github.com/user-attachments/assets/53bce243-591c-421d-a8a0-24e020e3a006" width="360"  alt="top up" />
+
 - 🛒 **Order & Pembayaran** — konfirmasi order, pilih metode (Dana, OVO, GoPay, Transfer Bank)
+- <img src="https://github.com/user-attachments/assets/a3fa9f09-d92b-408a-8512-8217fb93ce1f"  width="360"  alt="tf" />
+
 - ✅ **Halaman Sukses** — ringkasan transaksi setelah pembayaran
+- <img src="https://github.com/user-attachments/assets/c048ebf7-eae2-4b46-8840-69fc4726d2a2" width="360"  alt="sukses" />
+
 - 📋 **Riwayat Transaksi** — filter berdasarkan status (Semua / Sukses / Gagal)
+- <img src="https://github.com/user-attachments/assets/16e6f2d7-2bfd-46d6-8c7f-771c9fff7947" width="360"  alt="riwayat"/>
+
 - 🎁 **Promo & Diskon** — daftar promo dengan tombol klaim
+- <img src="https://github.com/user-attachments/assets/e7736482-0122-4737-ba1e-c38e3d96e449" width="360"  alt="diskon"/>
+
 - 🎧 **Support** — FAQ accordion, form kirim pesan, tombol WhatsApp/Email/Telegram
+- <img src="https://github.com/user-attachments/assets/6b549cd6-a1cf-4b63-80a7-15ae5aeb8902" width="360"  alt="cs" />
+
 - 👤 **Profil** — statistik user, menu pengaturan, logout
+<img src="https://github.com/user-attachments/assets/9a1bb8cb-ecc2-4f7a-8a14-1c3cd5c929cc"  width="360"  alt="profil" />
 
 ---
 
@@ -129,6 +146,7 @@ Aplikasi ini menggunakan **dummy data**. Untuk produksi, integrasikan dengan:
 **Jay (I Komang Jaya Wiguna)**  
 Mahasiswa Institut Bisnis dan Teknologi Indonesia (Instiki)  
 Konsentrasi: Web Development & UI/UX Design
+
 
 > Brand: **Jay.ID** — Layanan top up game & aplikasi premium
 
