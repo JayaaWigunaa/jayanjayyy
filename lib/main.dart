@@ -291,6 +291,9 @@ void showSnack(BuildContext ctx, String msg, Color color) {
 // ═══════════════════════════════════════════════
 // LOGIN SCREEN
 // ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+// LOGIN SCREEN (DIUBAH MENJADI EMAIL)
+// ═══════════════════════════════════════════════
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   @override
@@ -298,11 +301,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
-  final _uc = TextEditingController();
-  final _pc = TextEditingController();
-  bool _obscure = true, _loading = false;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _obscure = true;
+  bool _loading = false;
   late AnimationController _ac;
   late Animation<double> _fade;
+
   @override
   void initState() {
     super.initState();
@@ -310,13 +315,42 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     _fade = CurvedAnimation(parent: _ac, curve: Curves.easeOut);
     _ac.forward();
   }
-  @override void dispose() { _ac.dispose(); _uc.dispose(); _pc.dispose(); super.dispose(); }
+
+  @override
+  void dispose() {
+    _ac.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  // Validasi email sederhana
+  bool _isValidEmail(String email) {
+    final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return regex.hasMatch(email);
+  }
 
   void _login() async {
-    if (_uc.text.isEmpty || _pc.text.isEmpty) { showSnack(context, 'Username dan password tidak boleh kosong', kRed); return; }
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      showSnack(context, 'Email dan password tidak boleh kosong', kRed);
+      return;
+    }
+
+    if (!_isValidEmail(email)) {
+      showSnack(context, 'Masukkan format email yang valid', kRed);
+      return;
+    }
+
     setState(() => _loading = true);
+
+    // Simulasi proses login
     await Future.delayed(const Duration(seconds: 2));
+
     if (!mounted) return;
+
     setState(() => _loading = false);
     Navigator.pushReplacementNamed(context, '/dashboard');
   }
@@ -324,61 +358,126 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppBg(child: SafeArea(child: FadeTransition(opacity: _fade, child: Center(child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: Column(children: [
-          const SizedBox(height: 20),
-          Container(width: 90, height: 90, decoration: BoxDecoration(shape: BoxShape.circle, gradient: const LinearGradient(colors: [kPrimary, Color(0xFF0077B6)]), boxShadow: [BoxShadow(color: kPrimary.withOpacity(0.4), blurRadius: 24, spreadRadius: 2)]), child: const Icon(Icons.bolt_rounded, color: Colors.white, size: 48)),
-          const SizedBox(height: 16),
-          const Text('JAY TOPUP', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, letterSpacing: 4, color: Colors.white)),
-          const SizedBox(height: 6),
-          Container(width: 60, height: 3, decoration: BoxDecoration(borderRadius: BorderRadius.circular(2), gradient: const LinearGradient(colors: [kPrimary, kGold]))),
-          const SizedBox(height: 36),
-          Container(
-            padding: const EdgeInsets.all(28),
-            decoration: BoxDecoration(color: kCard, borderRadius: BorderRadius.circular(24), border: Border.all(color: kPrimary.withOpacity(0.2)), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 30, offset: const Offset(0, 10))]),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('Selamat Datang 👋', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
-              const SizedBox(height: 4),
-              Text('Silakan login untuk melanjutkan', style: TextStyle(fontSize: 13, color: Colors.white.withOpacity(0.5))),
-              const SizedBox(height: 28),
-              _lbl('Username'), const SizedBox(height: 8),
-              _tf(controller: _uc, hint: 'Masukkan username', icon: Icons.person_outline_rounded, color: kPrimary),
-              const SizedBox(height: 18),
-              _lbl('Password'), const SizedBox(height: 8),
-              TextField(
-                controller: _pc, obscureText: _obscure,
-                style: const TextStyle(color: Colors.white, fontSize: 14),
-                decoration: InputDecoration(
-                  hintText: 'Masukkan password', hintStyle: TextStyle(color: Colors.white.withOpacity(0.3), fontSize: 14),
-                  prefixIcon: const Icon(Icons.lock_outline_rounded, color: kPrimary, size: 20),
-                  suffixIcon: IconButton(icon: Icon(_obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined, color: Colors.white38, size: 20), onPressed: () => setState(() => _obscure = !_obscure)),
-                  filled: true, fillColor: kInput, contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: kPrimary, width: 1.5)),
+      body: AppBg(
+        child: SafeArea(
+          child: FadeTransition(
+            opacity: _fade,
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 28),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: const LinearGradient(colors: [kPrimary, Color(0xFF0077B6)]),
+                        boxShadow: [BoxShadow(color: kPrimary.withOpacity(0.4), blurRadius: 24, spreadRadius: 2)],
+                      ),
+                      child: const Icon(Icons.bolt_rounded, color: Colors.white, size: 48),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text('JAY TOPUP', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, letterSpacing: 4, color: Colors.white)),
+                    const SizedBox(height: 6),
+                    Container(width: 60, height: 3, decoration: BoxDecoration(borderRadius: BorderRadius.circular(2), gradient: const LinearGradient(colors: [kPrimary, kGold]))),
+                    const SizedBox(height: 36),
+
+                    Container(
+                      padding: const EdgeInsets.all(28),
+                      decoration: BoxDecoration(
+                        color: kCard,
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(color: kPrimary.withOpacity(0.2)),
+                        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 30, offset: const Offset(0, 10))],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Selamat Datang 👋', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
+                          const SizedBox(height: 4),
+                          Text('Silakan login untuk melanjutkan', style: TextStyle(fontSize: 13, color: Colors.white.withOpacity(0.5))),
+                          const SizedBox(height: 28),
+
+                          // EMAIL FIELD
+                          _lbl('Email'),
+                          const SizedBox(height: 8),
+                          TextField(
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            style: const TextStyle(color: Colors.white, fontSize: 14),
+                            decoration: InputDecoration(
+                              hintText: 'contoh@email.com',
+                              hintStyle: TextStyle(color: Colors.white.withOpacity(0.3), fontSize: 14),
+                              prefixIcon: const Icon(Icons.email_outlined, color: kPrimary, size: 20),
+                              filled: true,
+                              fillColor: kInput,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: kPrimary, width: 1.5)),
+                            ),
+                          ),
+
+                          const SizedBox(height: 18),
+
+                          // PASSWORD FIELD
+                          _lbl('Password'),
+                          const SizedBox(height: 8),
+                          TextField(
+                            controller: _passwordController,
+                            obscureText: _obscure,
+                            style: const TextStyle(color: Colors.white, fontSize: 14),
+                            decoration: InputDecoration(
+                              hintText: 'Masukkan password',
+                              hintStyle: TextStyle(color: Colors.white.withOpacity(0.3), fontSize: 14),
+                              prefixIcon: const Icon(Icons.lock_outline_rounded, color: kPrimary, size: 20),
+                              suffixIcon: IconButton(
+                                icon: Icon(_obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined, color: Colors.white38, size: 20),
+                                onPressed: () => setState(() => _obscure = !_obscure),
+                              ),
+                              filled: true,
+                              fillColor: kInput,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: kPrimary, width: 1.5)),
+                            ),
+                          ),
+
+                          const SizedBox(height: 12),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: () => Navigator.pushNamed(context, '/forgot'),
+                              child: const Text('Lupa Password?', style: TextStyle(color: kPrimary, fontSize: 13, fontWeight: FontWeight.w600)),
+                            ),
+                          ),
+
+                          const SizedBox(height: 28),
+                          GlowBtn(
+                            label: 'LOGIN SEKARANG',
+                            color: kPrimary,
+                            onTap: _login,
+                            isLoading: _loading,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Text('Versi 1.00', style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.3), letterSpacing: 1)),
+                    const SizedBox(height: 20),
+                  ],
                 ),
               ),
-              const SizedBox(height: 12),
-              Align(alignment: Alignment.centerRight, child: GestureDetector(onTap: () => Navigator.pushNamed(context, '/forgot'), child: const Text('Lupa Password?', style: TextStyle(color: kPrimary, fontSize: 13, fontWeight: FontWeight.w600)))),
-              const SizedBox(height: 28),
-              GlowBtn(label: 'LOGIN SEKARANG', color: kPrimary, onTap: _login, isLoading: _loading),
-            ]),
+            ),
           ),
-          const SizedBox(height: 30),
-          Text('Versi 1.00', style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.3), letterSpacing: 1)),
-          const SizedBox(height: 20),
-        ]),
-      ))))),
+        ),
+      ),
     );
   }
 
   Widget _lbl(String t) => Text(t, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.white.withOpacity(0.7)));
-  Widget _tf({required TextEditingController controller, required String hint, required IconData icon, required Color color}) => TextField(
-    controller: controller, style: const TextStyle(color: Colors.white, fontSize: 14),
-    decoration: InputDecoration(hintText: hint, hintStyle: TextStyle(color: Colors.white.withOpacity(0.3), fontSize: 14), prefixIcon: Icon(icon, color: color, size: 20), filled: true, fillColor: kInput, contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none), focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: color, width: 1.5))),
-  );
 }
-
 // ═══════════════════════════════════════════════
 // FORGOT PASSWORD SCREEN
 // ═══════════════════════════════════════════════
