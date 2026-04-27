@@ -20,7 +20,8 @@
 ## ✨ Fitur
 
 - 🔐 **Login & Lupa Password** — validasi input, loading state, animasi fade
-- <img src="https://github.com/user-attachments/assets/dc081d9f-7fbc-4f98-8cd1-7919caf4bf5c" width="360" alt="Login" />
+- <img  src="https://github.com/user-attachments/assets/4e267b23-8e3f-4557-87b6-f16b01e54836" widht = "360" alt = "dashboard" />
+
 
 - 🏠 **Dashboard** — kartu saldo, menu cepat, grid game, riwayat transaksi terakhir
 - <img src="https://github.com/user-attachments/assets/465f2335-c926-483a-92e8-37db0ee230c0" widht = "360" alt = "dashboard"/>
